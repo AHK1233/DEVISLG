@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demande de Devis - Travaux</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #imagePreview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        #imagePreview img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Demande de Devis</h1>
+        <form action="https://formsubmit.co/ah.krim@gmail.com" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Vos coordonnées</label>
+                <input type="text" name="nom" placeholder="Nom et Prénom" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" name="telephone" placeholder="Numéro de téléphone" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="adresse" placeholder="Adresse des travaux" required>
+            </div>
+            <div class="form-group">
+                <label>Description du projet</label>
+                <textarea name="description" placeholder="Décrivez votre projet en détail..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Photos du projet</label>
+                <input type="file" name="photos" accept="image/*" multiple required>
+                <div id="imagePreview"></div>
+            </div>
+            <!-- Champs cachés pour FormSubmit -->
+            <input type="hidden" name="_subject" value="Nouvelle demande de devis">
+            <input type="hidden" name="_captcha" value="false">
+            <button type="submit">Envoyer ma demande de devis</button>
+        </form>
+    </div>
+
+    <script>
+        // Prévisualisation des images
+        document.getElementById('photos').addEventListener('change', function(e) {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+            
+            for (let file of e.target.files) {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        preview.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
